@@ -40,7 +40,7 @@
     ("ff7625ad8aa2615eae96d6b4469fcc7d3d20b2e1ebc63b761a349bebbb9d23cb" default)))
  '(package-selected-packages
    (quote
-    (powerline-evil powerline linum-relative dracula-theme evil-leader evil))))
+    (nasm-mode evil-magit auto-complete all-the-icons neotree powerline-evil powerline linum-relative dracula-theme evil-leader evil))))
 
 ;; Disable GUI stuff
 (menu-bar-mode -1)
@@ -84,3 +84,12 @@
 ;; Powerline
 (powerline-evil-vim-color-theme)
 
+;; Neotree
+(setq neo-theme (if (display-graphic-p) 'ascii 'arrow))
+(global-set-key [f2] 'neotree-toggle)
+(add-hook 'neotree-mode-hook
+          (lambda ()
+              (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
+              (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-quick-look)
+              (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
+              (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)))
