@@ -17,6 +17,9 @@
         (not (string-suffix-p "." filename)))
         (add-to-list 'load-path (car file))))))
 
+; add themes dir
+(add-to-list 'custom-theme-load-path (expand-file-name "themes" user-emacs-directory))
+
 ; no init.el littering
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
@@ -47,7 +50,8 @@
 (setq-default indicate-empty-lines t)
 (setq-default indent-tabs-mode nil)
 
-(setq visible-bell t)
+(setq visible-bell nil
+      ring-bell-function #'ignore)
 (setq vc-follow-symlinks t)
 (setq large-file-warning-threshold nil)
 (setq split-width-threshold nil)
@@ -79,24 +83,40 @@
             (projectile-project-name)))))
 
 ; helm
-(use-package helm
-  :ensure t
-  :diminish helm-mode
-  :commands helm-mode
-  :config
-  (helm-mode 1)
-  (setq helm-buffers-fuzzy-matching t)
-  (setq helm-autoresize-mode t)
-  (setq helm-buffer-max-length 40))
+ (use-package helm
+   :ensure t
+   :diminish helm-mode
+   :commands helm-mode
+   :config
+   (setq helm-buffers-fuzzy-matching t)
+   (setq helm-autoresize-mode t)
+   (setq helm-buffer-max-length 40))
 
-; helm-projectile
 (use-package helm-projectile
   :commands (helm-projectile helm-projectile-switch-project)
-:ensure t)
+  :ensure t)
+
+(helm-mode 1)
+
+; powerline
+(require 'init-powerline)
+
+; theme
+(use-package zenburn-theme :ensure t :defer t)
+(use-package mmm-mode :ensure t :defer t)
+(use-package yaml-mode :ensure t :defer t)
+(use-package sublime-themes :ensure t)
+(use-package gruvbox-theme :ensure t)
+(use-package color-theme-sanityinc-tomorrow :ensure t)
+
+; carbon now
+(use-package carbon-now-sh :ensure t)
 
 ; emacs-d
 (setq server-socket-dir (expand-file-name "server" user-emacs-directory))
 (server-start)
+
+(load-theme 'gruvbox)
 
 ; provide
 (provide 'init)
